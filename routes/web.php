@@ -5,6 +5,7 @@ use App\Http\Controllers\SoundController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if(FacadesAuth::check()){
@@ -13,12 +14,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    if (FacadesAuth::check()) {
-        return redirect()->route('sounds.index');
-    }
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 
 Route::post('/sounds/{id}/rate', [SoundController::class, 'rate'])->name('sounds.rate');
