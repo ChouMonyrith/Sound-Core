@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Sound;
 use App\Models\User;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -212,5 +213,30 @@ class SoundController extends Controller
 
         return redirect()->route('sounds.index')->with('success','Sound rejected successfully');
 
+    }
+
+    public function rate(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        $sound = Sound::findOrFail($id);
+
+       
+        $sound->ratings()->updateOrCreate(
+            ['user_id' => Auth::id()], 
+            [
+                'rating' => $request->rating,
+                'comment' => $request->comment,
+            ]
+        );
+
+        
+        $sound->average_rating = $sound->ratings()->avg('rating');
+        $sound->save();
+
+        return redirect()->route('sounds.show', $id)->with('success', 'Your rating has been submitted successfully!');
     }
 }

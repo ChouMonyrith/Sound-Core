@@ -85,6 +85,20 @@
                             </form>
                         </div>
                     @endcan
+
+
+
+                    <p class="mt-2 text-sm text-gray-400">
+                        Average Rating: 
+                        @if ($sound->average_rating)
+                            <span class="text-yellow-500">{{ number_format($sound->average_rating, 1) }} &#9733;</span>
+                        @else
+                            <span class="text-gray-500">No ratings yet</span>
+                        @endif
+                    </p>
+        
+                    
+                    {{-- <x-star-rating :rating="$sound->average_rating"></x-star-rating> --}}
                 </div>
             @endforeach
             <div class="mt-6 flex justify-center">

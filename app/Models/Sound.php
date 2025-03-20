@@ -6,12 +6,23 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
+
 class Sound extends Model
 {
-    protected $fillable = ['title','artist','genre','duration','description','file_path','image_path','category_id','user_id','status'];
+    protected $fillable = [
+        'title', 'artist', 'genre', 'duration', 'description', 
+        'file_path', 'image_path', 'category_id', 'user_id', 
+        'status', 'average_rating'
+    ];
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
     }
 
     public function scopeTitle(Builder $query,string $title):Builder|QueryBuilder

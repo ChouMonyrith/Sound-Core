@@ -139,6 +139,41 @@
                     });
                 }, 3000); 
             });
+            document.addEventListener('DOMContentLoaded', function () {
+                const stars = document.querySelectorAll('#star-rating .star');
+
+                stars.forEach(star => {
+                    star.addEventListener('mouseover', function () {
+                        const value = this.getAttribute('data-value');
+                        highlightStars(value);
+                    });
+
+                    star.addEventListener('mouseout', function () {
+                        resetStars();
+                    });
+                });
+
+                function highlightStars(value) {
+                    stars.forEach(star => {
+                        if (star.getAttribute('data-value') <= value) {
+                            star.classList.add('text-yellow-500');
+                            star.classList.remove('text-gray-400');
+                        } else {
+                            star.classList.add('text-gray-400');
+                            star.classList.remove('text-yellow-500');
+                        }
+                    });
+                }
+
+                function resetStars() {
+                    stars.forEach(star => {
+                        if (!star.previousElementSibling || !star.previousElementSibling.checked) {
+                            star.classList.add('text-gray-400');
+                            star.classList.remove('text-yellow-500');
+                        }
+                    });
+                }
+            });
         </script>
     </body>
 </html>
