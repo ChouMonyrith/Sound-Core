@@ -4,6 +4,7 @@
    > cd Sound-Core
 3. Install the dependencies
    > npm install
+   
    > composer install
 4. Create new .env and connect to your own database
 5. Link Storage
