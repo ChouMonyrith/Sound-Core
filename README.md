@@ -11,4 +11,5 @@
    > php artisan storage:link
 6. Run the project
    >npm run dev
+   
    >php artisan serve
